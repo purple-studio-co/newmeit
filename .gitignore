@@ -23,6 +23,7 @@ project-source.tar.gz
 
 # editor / OS / agent
 .claude
+CLAUDE.md
 .DS_Store
 **/.DS_Store
 

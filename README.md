@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ньюми — сайт (newmeit.ru)
 
-## Getting Started
+Лендинг / сайт для аккредитации сервиса «Ньюми». SPA на **Vite + React + TanStack Router**, стили — **Tailwind**.
 
-First, run the development server:
+## Разработка
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install      # зависимости
+bun dev          # дев-сервер (localhost:5173)
+bun run build    # прод-сборка в dist/
+bun run preview  # предпросмотр собранного
+bun run typecheck
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Картинки/видео/PDF лежат в `public/` и подключаются через хелпер `src/utils/asset.ts`
+(`asset('/images/x.png')`), который учитывает `base` — поэтому пути работают и в корне домена,
+и на под-пути (`*.github.io/<repo>/`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Хостинг
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Сайт собирается в статику и обслуживается **GitHub Pages** (за реверс-прокси для кастомного домена).
 
-## Learn More
+- Ветка **`main`** — исходники, ветка **`gh-pages`** — собранный сайт (его отдаёт Pages).
+- `public/CNAME` = `newmeit.ru` — кастомный домен Pages (не удалять).
+- Клиентские роуты (`/price`, `/documentation`, `/activity`) пре-рендерятся в shell-копии
+  `index.html` плагином `github-pages-spa` в `vite.config.ts` → прямой заход даёт `200`.
 
-To learn more about Next.js, take a look at the following resources:
+## Деплой
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Публикуется только ветка `gh-pages`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+bun run build
+git worktree add --orphan -b _deploy /tmp/_deploy
+cp -R dist/. /tmp/_deploy/
+( cd /tmp/_deploy && git add -A && git commit -m "Deploy" && git push -f origin _deploy:gh-pages )
+git worktree remove /tmp/_deploy --force && git branch -D _deploy
+```
 
-## Deploy on Vercel
+GitHub Pages пересобирается за ~1 мин.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Замечания
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `.env` в репозиторий **не коммитится** (см. `.gitignore`).
+- `_headers`/`_redirects` в `public/` — артефакты Cloudflare Pages, на текущем хостинге не используются.
