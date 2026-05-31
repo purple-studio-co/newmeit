@@ -1,0 +1,92 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "next",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": ["tailwindcss", "jsx-a11y"],
+  "rules": {
+    "tailwindcss/enforces-shorthand": 0,
+    "tailwindcss/no-custom-classname": 1,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_" }
+    ],
+    "prefer-const": 2,
+    "one-var": [2, { "let": "never", "const": "never" }],
+    "no-use-before-define": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "react/prop-types": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "react/jsx-handler-names": [
+      2,
+      {
+        "checkLocalVariables": true,
+        "eventHandlerPrefix": "on|handle"
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "object",
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@/_data{,/**}",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/_utils{,/**}",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/_modules{,/**}",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@/_components{,/**}",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "..{,/**}",
+            "group": "sibling",
+            "position": "before"
+          },
+          {
+            "pattern": "/**",
+            "patternOptions": { "matchBase": true },
+            "group": "index",
+            "position": "after"
+          }
+        ],
+        "alphabetize": {
+          "order": "asc"
+        },
+        "newlines-between": "always-and-inside-groups",
+        "pathGroupsExcludedImportTypes": ["builtin"]
+      }
+    ],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  }
+}
