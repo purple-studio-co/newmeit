@@ -1,0 +1,26 @@
+/*
+  Cache-Control: no-store, must-revalidate
+
+/price
+  Content-Type: text/html; charset=utf-8
+
+/activity
+  Content-Type: text/html; charset=utf-8
+
+/documentation
+  Content-Type: text/html; charset=utf-8
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/videos/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/pdf/*
+  Cache-Control: public, max-age=31536000, immutable
